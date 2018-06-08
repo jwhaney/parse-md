@@ -16,6 +16,8 @@ def main():
     lineArray = []
     master = {}
     multi = []
+    unique = []
+    viewed = set()
 
     for subdir, dirs, files in os.walk(directory):
         for file in files:
@@ -42,22 +44,17 @@ def main():
                             lineArray.pop()
                         print(lineArray)
                         lineArray.append(url)
+
                     print(lineArray)
 
-                    for item in lineArray:
-                        print(item)
-                        #key = item[0]
-                        #value = item[1]
+                    for i in lineArray:
+                        if i not in viewed:
+                            unique.append(i)
+                            viewed.add(i)
 
+                    print(unique)
 
-                    #print(mdObject)
-                    #print(multi)
-                    #key = lineArray[0]
-                    #value = lineArray[1]
-                    #print(value)
-                    #print(key, value)
-                    #mdList.extend(key,value)
-                    #master[mdList]
+                f.close()
 
             print(mdObject)
 
