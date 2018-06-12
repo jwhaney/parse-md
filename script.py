@@ -9,12 +9,12 @@ def main():
 
     directory = os.getcwd() + "/md_files"
     csv_file = os.getcwd() + "/test.csv"
-    mdList = []
+
     lineArray = []
     fieldList = []
-    count = 0
+    hold = []
+    addThis = []
     master = {}
-    dash = ''
 
     for subdir, dirs, files in os.walk(directory):
         for file in files:
@@ -28,9 +28,12 @@ def main():
                 mdObject = {}
 
                 for line in f:
-                    if line.strip() == "---":
-                        dash = str(dash + (count + 1))
-                        print(dash)
+                    if line.startswith("---"):
+                        for line in f:
+                            hold.append(line.strip())
+                        mdObject["description"] = ''.join(hold)
+                        break
+
                     line = line.strip()
                     s = line.find(':')
                     lineArray = line.split(line[s])
@@ -43,10 +46,7 @@ def main():
                         lineArray.append(url)
 
                     mdObject[lineArray[0]] = lineArray[1]
-
-                    # add functionality for scraping all text below '---' for
-                    # value of long description key
-
+                    #mdObject['description'] = addThis[0]
 
                 master[fileName] = mdObject
 
@@ -55,12 +55,10 @@ def main():
             if item not in fieldList:
                 fieldList.append(item)
 
-    #add functionality for creating csv from master dictionary
+    #create csv from master dictionary and unique field names from fieldList
     with open(csv_file, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldList)
-
         writer.writeheader()
-
         for k, v in master.items():
             writer.writerow(v)
 
