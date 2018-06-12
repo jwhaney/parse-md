@@ -7,18 +7,17 @@ import os, csv
 
 def main():
 
-    directory = os.getcwd() + "/md_files"
-    csv_file = os.getcwd() + "/test.csv"
+    directory = os.getcwd() + "/md_files/test_batch"
+    csv_file = os.getcwd() + "/master.csv"
 
     lineArray = []
     fieldList = []
-    hold = []
-    addThis = []
     master = {}
 
     for subdir, dirs, files in os.walk(directory):
         for file in files:
             if file.endswith(('.md', '.markdown')):
+                hold = []
                 fileName = file
                 print(fileName)
                 file = os.path.join(subdir, file)
@@ -31,7 +30,7 @@ def main():
                     if line.startswith("---"):
                         for line in f:
                             hold.append(line.strip())
-                        mdObject["description"] = ''.join(hold)
+                            mdObject["description"] = ''.join(hold)
                         break
 
                     line = line.strip()
@@ -46,7 +45,6 @@ def main():
                         lineArray.append(url)
 
                     mdObject[lineArray[0]] = lineArray[1]
-                    #mdObject['description'] = addThis[0]
 
                 master[fileName] = mdObject
 
@@ -55,7 +53,7 @@ def main():
             if item not in fieldList:
                 fieldList.append(item)
 
-    #create csv from master dictionary and unique field names from fieldList
+    #create csv from master dictionary and use unique field names from fieldList
     with open(csv_file, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldList)
         writer.writeheader()
