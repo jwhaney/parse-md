@@ -1,6 +1,9 @@
 '''
 this script will read markdown files from a sub-directory, extract the front matter
 key/values, and write them to a csv using only unique keys for fields.
+
+author: john haney
+date: june, 2018
 '''
 
 import os, csv
