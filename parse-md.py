@@ -8,17 +8,18 @@ date: june, 2018
 
 import os, csv
 
-def main():
-    # get current working directory + subdirectory of markdown files and create
-    # empty csv to write to later.
-    directory = os.getcwd() + "/md_files/test_batch"
-    csv_file = os.getcwd() + "/master.csv"
+# get current working directory + subdirectory of markdown files and create empty
+# csv to write to later. edit this path and file name to whatever you choose.
+directory = os.getcwd() + "/md_files"
+csv_file = os.getcwd() + "/master.csv"
 
-    lineArray = []
-    fieldList = []
-    master = {}
+# create global variables to be used later
+lineArray = []
+fieldList = []
+master = {}
 
-    # iterate through markdown files in subdirectory
+# iterate through markdown files in directory
+def workhorse():
     for subdir, dirs, files in os.walk(directory):
         for file in files:
             # test to make sure all files in subdirectory are markdown
@@ -62,18 +63,25 @@ def main():
                 # use filename as key for each nested file dict
                 master[fileName] = mdObject
 
-    # iterate through master dict, populate fieldList with only unique names
+# iterate through master dict, populate fieldList with only unique names
+def field_pop():
     for k, v in master.items():
         for item in v:
             if item not in fieldList:
                 fieldList.append(item)
 
-    # create csv from master dictionary and use unique field names from fieldList
+# create csv from master dictionary and use unique field names from fieldList
+def output_csv():
     with open(csv_file, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldList)
         writer.writeheader()
         for k, v in master.items():
             writer.writerow(v)
 
-#run it!
-main()
+def main():
+    workhorse()
+    field_pop()
+    output_csv()
+
+if __name__ == '__main__':
+    main()
