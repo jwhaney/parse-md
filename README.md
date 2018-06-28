@@ -5,7 +5,7 @@ a python script to iterate through a directory of markdown files (/md_files), pu
 
 ### setup
 - built with python 3.5.2
-- script only requires native python3 os and csv libraries
+- script only requires native os and csv libraries
 
 ### run it
 1. `clone` or download this repo
