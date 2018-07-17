@@ -13,5 +13,3 @@ a python script to iterate through a directory of markdown files (/md_files), pu
 3. *optional:* change the output csv filename (line 87)
 4. open terminal and `cd` into this repo
 5. type `python3 parse-md.py` and press enter
-
-## **fork and/or star the repo if you found it useful!**
